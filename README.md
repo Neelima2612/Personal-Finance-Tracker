@@ -1,10 +1,54 @@
-💰 Personal Finance Tracker
+ 📌 Project Summary
+The **Personal Finance Tracker** is a secure, dynamic, and modern desktop application engineered using **Python (CustomTkinter)** and an **SQLite3** relational database. The application is designed to help individuals log income, track specific category-wise expenses (Food, Travel, and Miscellaneous), visualize spending breakdowns through embedded analytics, and audit historical financial records.
 
-A desktop-based finance management application built using Python and Tkinter. This application provides a secure login system, tracks income and expenses, visualizes spending habits, and allows users to export data for deeper financial analysis.
+The core highlight of this project is its robust **isolated multi-user architecture**. It allows multiple users to register and manage their finances on the same system without any risk of cross-user data exposure, mirroring real-world secure software standards.
 
-📌 Project Overview
 
-Managing personal finances shouldn't be complicated. The **Personal Finance Tracker** is designed to help users take control of their financial health. It provides a clean graphical user interface (GUI) to monitor daily transactions, visualizes spending through dynamic charts, gives smart automated budgeting suggestions, and supports robust data exporting. Mostly made for college students.
+🛠️ Key Technical Modules & Features
+
+### 1. User Authentication Portal (`login.py`)
+
+* Implements a standalone secure user gateway allowing new users to register unique credentials and existing users to authenticate.
+* Managed via a structured relational database file (`users.db`) with constraint checks to prevent duplicate usernames.
+
+### 2. Session Management & Data Isolation (`database.py`)
+
+* Built with data integrity at its core. When a user logs in successfully, their unique username is captured as an active global session state variable.
+* The application utilizes **Composite Primary Keys** `(username, category)` and parameterized SQL queries inside `finance.db`. This guarantees complete transactional isolation—users can *only* read, write, or update their personal financial data.
+
+### 3. Embedded Live Visual Analytics (`main.py`)
+
+* Integrates **Matplotlib** directly into the CustomTkinter GUI framework using the `FigureCanvasTkAgg` backend interface.
+* Upon processing transactions, raw numerical float values are instantly processed, vectorized, and rendered into an interactive **Live Spending Breakdown Pie Chart**.
+
+### 4. Automated Financial Intelligence Engine
+
+* Features background algorithmic threshold evaluations. The system dynamically computes the balance percentage against total income.
+* If expenses exceed critical saving margins (e.g., 50% or 70% threshold limits), the UI color codes change automatically, and the engine generates customized alert prompts like: *"Warning! Expenses exceeded income 🚨"*.
+
+### 5. Data Serialization (`Export CSV`)
+
+* Integrates Python’s native `csv` file handler to let users download their complete isolated historical transaction records into a clean, comma-separated spreadsheet named `[username]_transactions.csv` for advanced reporting in MS Excel or Power BI.
+
+
+## 🏗️ Architecture Design Flow
+
+```text
+[ USER INTERACTION ]
+        │
+        ▼
+ 🔐 login.py (Tkinter GUI Portal) ──► Validates User ──► [ users.db ]
+        │
+ (If Session Authenticated)
+        │
+        ▼
+ 📊 main.py (Modern CustomTkinter Dashboard + Matplotlib Canvas)
+        │
+        ├──► Operations: Calculate, Render Plots, Load Isolated Logs, Export CSV
+        │
+        ▼
+ ⚙️ database.py (SQL Queries Execution) ◄──────► [ finance.db ] (User-Isolated Ledgers)
+
 
  🚀 Key Features:
 🔐 User Login & Authentication System:** Secure access to ensure your financial data remains private.
@@ -54,9 +98,9 @@ pip install matplotlib pandas openpyxl
 
  ▶️ How to Run the Project
 
-Launch the desktop application directly from your terminal
-python main.py
-
+Launch the desktop application directly from your terminal:
+python login.py
+eg: username :anant  password:1223
 
 🔧 Configuration & System Behavior
 
